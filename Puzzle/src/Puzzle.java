@@ -16,7 +16,6 @@ public class Puzzle {
         public static String[] DICTIONARY = {"OX","CAT","TOY","AT","DOG","CATAPULT","T"};
 
         // Global variables
-        static int count = 0;
         static String word = "";
 
         static boolean IsWord(String testWord)
@@ -27,16 +26,39 @@ public class Puzzle {
         }
 
         public static int FindWords(char[][] puzzle){
+            int count = 0;
             for(int row = 0; row < puzzle.length; row++) {
                 for(int col = 0; col < puzzle[row].length; col++) {
-                    word = String.valueOf(puzzle[col][row]);
+                    String letter = String.valueOf(puzzle[col][row]);
                     // Checks if individual characters are in the DICTIONARY
-                    if(IsWord(word))
+                    if(IsWord(letter)) {
                         count++;
+                    }
+                }
+            }
+            return count + Horizontal(puzzle);
+        }
+
+        // Transverse 2D array Horizontally
+        public static int Horizontal(char[][] puzzle) {
+            int count = 0;
+            for(int row = 0; row < puzzle.length; row++) {
+                for(int col = 0; col < puzzle[row].length; col++) {
+                    for(int i = 0; i < puzzle[row].length && col+i < puzzle[row].length; i++) {
+                        // transverse each letter from starting character horizontally.
+                        word += puzzle[row][col+i];
+                        // Checks if string is in the DICTIONARY as long as the word length is not a single character
+                        if(IsWord(word) && word.length() > 1) {
+                            System.out.println(word);
+                            count++;
+                        }
+                    }
                 }
             }
             return count;
         }
+
+
     }
 
     public static void main(String args[]) {
