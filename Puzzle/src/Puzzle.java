@@ -25,7 +25,6 @@ public class Puzzle {
         public static int FindWords(char[][] puzzle){
             int count = 0;
             for(int row = 0; row < puzzle.length; row++) {
-                String word = "";
                 for(int col = 0; col < puzzle[row].length; col++) {
                     String letter = String.valueOf(puzzle[row][col]);
                     // Checks if individual characters are in the DICTIONARY
@@ -41,8 +40,8 @@ public class Puzzle {
         public static int Horizontal(char[][] puzzle) {
             int count = 0;
             for(int row = 0; row < puzzle.length; row++) {
-                String word = "";
                 for(int col = 0; col < puzzle[row].length; col++) {
+                    String word = "";
                     for(int i = 0; col+i < puzzle[row].length; i++) {
                         // Builds string using each letter from starting character horizontally.
                         word += puzzle[row][col+i];
@@ -60,8 +59,8 @@ public class Puzzle {
         public static int Vertical(char[][] puzzle) {
             int count = 0;
             for(int row = 0; row < puzzle.length; row++) {
-                String word = "";
                 for(int col = 0; col < puzzle[row].length; col++) {
+                    String word = "";
                     for(int i = 0; row+i < puzzle.length; i++) {
                         // Builds string using each letter from starting character vertically
                         word += puzzle[row+i][col];
@@ -79,16 +78,27 @@ public class Puzzle {
         public static int Diagonal(char[][] puzzle) {
             int count = 0;
             for(int row = 0; row < puzzle.length; row++) {
-                String left = "";
-                String right = "";
                 for(int col = 0; col < puzzle[row].length; col++) {
+                    String left = "";
+                    String right = "";
                     // Transverse left diagonal
                     for(int i = 0; row+i < puzzle.length && col-i > 0; i++) {
                         // Builds string using each letter from starting character left diagonally
-                        // left 1 and down 1 of starting character
+                        // left i and down i of starting character
                         left += puzzle[row+i][col-i];
                         // Checks if string is in the DICTIONARY as long as the word length is not a single character
                         if((IsWord(left) || IsWord(Reverse(left))) && left.length() > 1) {
+                            count++;
+                        }
+                    }
+
+                    // Transverse right diagonal
+                    for(int i = 0; row+i < puzzle.length && col+i < puzzle[row].length; i++) {
+                        // Builds string using each letter from starting character left diagonally
+                        // right i and down i of starting character
+                        right += puzzle[row+i][col+i];
+                        // Checks if string is in the DICTIONARY as long as the word length is not a single character
+                        if((IsWord(right) || IsWord(Reverse(right))) && right.length() > 1) {
                             count++;
                         }
                     }
@@ -110,15 +120,15 @@ public class Puzzle {
     }
 
     public static void main(String args[]) {
+        /*
         char[][] words = {{'C','A','T'},
                             {'X','Z','T'},
                             {'Y','O','T'}};
-
-        /*
+        */
         char[][] words = {{'C','A','T','A','P','U','L','T'},
                 {'X','Z','T','T','O','Y','O','O'},
                 {'Y','O','T','O','X','T','X','X'}};
-         */
+
 
         System.out.println(PuzzleSolver.FindWords(words));
     }
