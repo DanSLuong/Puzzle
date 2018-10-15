@@ -47,7 +47,7 @@ public class Puzzle {
                         // Builds string using each letter from starting character horizontally.
                         word += puzzle[row][col+i];
                         // Checks if string is in the DICTIONARY as long as the word length is not a single character
-                        if(IsWord(word) && word.length() > 1) {
+                        if((IsWord(word) || IsWord(Reverse(word))) && word.length() > 1) {
                             count++;
                         }
                     }
@@ -66,7 +66,7 @@ public class Puzzle {
                         // Builds string using each letter from starting character vertically
                         word += puzzle[row+i][col];
                         // Checks if string is in the DICTIONARY as long as the word length is not a single character
-                        if(IsWord(word) && word.length() > 1) {
+                        if((IsWord(word) || IsWord(Reverse(word))) && word.length() > 1) {
                             count++;
                         }
                     }
@@ -74,18 +74,27 @@ public class Puzzle {
             }
             return count;
         }
+
+        // Reverse the string
+        public static String Reverse(String word) {
+            char[] reversed = new char[word.length()];
+            for(int row = 0; row < word.length(); row++) {
+                reversed[word.length()-row-1] = word.charAt(row);
+            }
+            return new String(reversed);
+        }
     }
 
     public static void main(String args[]) {
-        /*char[][] words = {{'C','A','T'},
+        char[][] words = {{'C','A','T'},
                             {'X','Z','T'},
                             {'Y','O','T'}};
 
-        /*/
+        /*
         char[][] words = {{'C','A','T','A','P','U','L','T'},
                 {'X','Z','T','T','O','Y','O','O'},
                 {'Y','O','T','O','X','T','X','X'}};
-
+         */
 
         System.out.println(PuzzleSolver.FindWords(words));
     }
