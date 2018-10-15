@@ -34,7 +34,7 @@ public class Puzzle {
                     }
                 }
             }
-            return count + Horizontal(puzzle) + Vertical(puzzle);
+            return count + Horizontal(puzzle) + Vertical(puzzle) + Diagonal(puzzle);
         }
 
         // Transverse 2D array Horizontally
@@ -75,12 +75,36 @@ public class Puzzle {
             return count;
         }
 
+        // Transverse 2D array Diagonally
+        public static int Diagonal(char[][] puzzle) {
+            int count = 0;
+            for(int row = 0; row < puzzle.length; row++) {
+                String left = "";
+                String right = "";
+                for(int col = 0; col < puzzle[row].length; col++) {
+                    // Transverse left diagonal
+                    for(int i = 0; row+i < puzzle.length && col-i > 0; i++) {
+                        // Builds string using each letter from starting character left diagonally
+                        // left 1 and down 1 of starting character
+                        left += puzzle[row+i][col-i];
+                        // Checks if string is in the DICTIONARY as long as the word length is not a single character
+                        if((IsWord(left) || IsWord(Reverse(left))) && left.length() > 1) {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+
         // Reverse the string
         public static String Reverse(String word) {
             char[] reversed = new char[word.length()];
             for(int row = 0; row < word.length(); row++) {
+                // Store characters from word in reversed by transversing reversed backwards
                 reversed[word.length()-row-1] = word.charAt(row);
             }
+            // Convert reversed to a string
             return new String(reversed);
         }
     }
