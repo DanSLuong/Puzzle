@@ -13,20 +13,30 @@ import java.util.*;
 public class Puzzle {
     public static class PuzzleSolver
     {
-        public static string[] DICTIONARY = {"OX","CAT","TOY","AT","DOG","CATAPULT","T"};
+        public static String[] DICTIONARY = {"OX","CAT","TOY","AT","DOG","CATAPULT","T"};
 
-        static bool IsWord(string testWord)
+        // Global variables
+        static int count = 0;
+        static String word = "";
+
+        static boolean IsWord(String testWord)
         {
-            if (Arrays.asList(DICTIONARY).Contains(testWord))
+            if (Arrays.asList(DICTIONARY).contains(testWord))
                 return true;
             return false;
         }
 
         public static int FindWords(char[][] puzzle){
-
-            return 0; // TODO
+            for(int row = 0; row < puzzle.length; row++) {
+                for(int col = 0; col < puzzle[row].length; col++) {
+                    word = String.valueOf(puzzle[col][row]);
+                    // Checks if individual characters are in the DICTIONARY
+                    if(IsWord(word))
+                        count++;
+                }
+            }
+            return count;
         }
-
     }
 
     public static void main(String args[]) {
@@ -40,6 +50,6 @@ public class Puzzle {
                 {'Y','O','T','O','X','T','X','X'}};
         */
 
-        // System.out.println(PuzzleSolver.FindWords(words));
+        System.out.println(PuzzleSolver.FindWords(words));
     }
 }
